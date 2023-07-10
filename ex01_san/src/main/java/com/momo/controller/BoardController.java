@@ -11,23 +11,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.momo.service.BoardService;
-import com.momo.vo.BoardVo;
+import com.momo.vo.BoardVO;
+import com.momo.vo.Criteria;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/board/*")
 @Log4j
 public class BoardController {
-
-	@GetMapping("message")
-	public void message(Model model) {
-
-	}
-
+	
+	/**
+	 * /board/msg
+	 * WEB-INF/views/board/msg.jsp
+	 */
 	@GetMapping("msg")
 	public void msg() {
+		
+	}
+	
+	@GetMapping("message")
+	public void message(Model model) {
 
 	}
 
@@ -38,25 +42,35 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
-
+	/**
+	 * 파라메터의 자동수집
+	 * 	기본생성자를 이용해서 객체를 생성
+	 * 	-> setter 메서드를 이용해서 세팅
+	 * @param model
+	 * @param cri
+	 */
 	@GetMapping("list")
-	public void getlist(Model model) {
-		List<BoardVo> list = boardService.getListXml();
-		Log.info("=============================");
-		Log.info(list);
-
-		model.addAttribute("list", list);
+	public void getlist(Model model, Criteria cri) {
+		boardService.getListXml(cri, model);
+		log.info("====================list");
+		log.info("cri : " + cri);
 	}
 
 	@GetMapping("view")
-	public void getOne(Model model, int bno) {
-		Log.info("======================== bno" + bno);
-		model.addAttribute("board", boardService.getOne(bno));
+	public void getOne(Model model, BoardVO paramVO) {
+		log.info("================ bno" + paramVO);
+		BoardVO board = boardService.getOne(paramVO.getBno());
+		model.addAttribute("board", board);
 	}
-
+	
+	/**
+	 * requestMapping에 /board/ 가 설정 되어 있으므로
+	 * /board/write
+	 * @param model
+	 */
 	@GetMapping("write")
 	public void write(Model model) {
-		BoardVo board = new BoardVo();
+		
 	}
 
 	/**
@@ -71,7 +85,9 @@ public class BoardController {
 	 */
 
 	@PostMapping("write")
-	public String writeAction(BoardVo board, RedirectAttributes rttr, Model model) {
+	public String writeAction(BoardVO board
+								, RedirectAttributes rttr
+								, Model model) {
 		log.info(board);
 
 		// 시퀀스 조회 후 시퀀스 번호를 bno에 저장
@@ -97,5 +113,50 @@ public class BoardController {
 			return "/board/message";
 		}
 
+	}
+	
+	@GetMapping("edit")
+	public String edit(BoardVO paramVO, Model model) {
+		BoardVO board = boardService.getOne(paramVO.getBno());
+		model.addAttribute("board", board);
+		
+		return "/board/write";
+	}
+	
+	@PostMapping("editAction")
+	public String editAction(BoardVO board
+								, RedirectAttributes rttr
+								, Model model) {
+		// 수정
+		int res = boardService.update(board);
+		
+		if(res > 0) {
+			// redirect시 request 영역이 공유 되지 않으므로 
+			// RedirectAttributes를 이용 합니다. 
+			//model.addAttribute("msg", "수정 되었습니다.");
+			rttr.addFlashAttribute("msg", "수정되었습니다.");
+			
+			// 상세페이지로 이동
+			return "redirect:/board/view?bno=" + board.getBno();			
+		} else {
+			model.addAttribute("msg", "수정중 예외사항이 발생 하였습니다.");
+			return "/board/message";
+		}
+		
+	}
+	
+	@GetMapping("delete")
+	public String delete(BoardVO board
+							, RedirectAttributes rttr
+							, Model model) {
+		
+		int res = boardService.delete(board.getBno());
+		if(res > 0) {			
+			rttr.addFlashAttribute("msg", "삭제되었습니다.");
+			return "redirect:/board/list";
+		} else {
+			model.addAttribute("msg", "삭제중 예외가 발생 하였습니다.");
+			return "/board/message";
+		}
 	}
 }

@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.momo.mapper.BoardMapper;
-import com.momo.vo.BoardVo;
+import com.momo.vo.BoardVO;
+import com.momo.vo.Criteria;
+import com.momo.vo.PageDto;
 
 /**
  * 각 계층간의 연결은 인터페이스를 활용하여 느슨한 결합을 합니다.
@@ -38,22 +41,36 @@ public class BoardServiceImpl implements BoardService{
 	BoardMapper boardMapper;
 	
 	@Override
-	public List<BoardVo> getListXml() {
-		return boardMapper.getListXml();
+	public List<BoardVO> getListXml(Criteria cri, Model model) {
+		/*
+		 * 1. 리스트 조회
+		 * 		- 검색어, 페이지정보(startNo ~ endNo까지 조회)
+		 * 2. 총건수 조회
+		 * 3. pageDto 객체 생성
+		 * */
+		List<BoardVO> list = boardMapper.getListXml(cri);
+		int totalCnt = boardMapper.getTotalCnt(cri);
+		PageDto pageDto = new PageDto(cri, totalCnt);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("pageDto", pageDto);
+		
+		return null;
 	}
 
 	@Override
-	public int insert(BoardVo board) {
+	public int insert(BoardVO board) {
 		return boardMapper.insert(board);
 	}
 
 	@Override
-	public int insertSelectKey(BoardVo board) {
+	public int insertSelectKey(BoardVO board) {
 		return boardMapper.insertSelectKey(board);
 	}
 
 	@Override
-	public BoardVo getOne(int bno) {
+	public BoardVO getOne(int bno) {
 		return boardMapper.getOne(bno);
 	}
 
@@ -63,14 +80,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int update(BoardVo board) {
+	public int update(BoardVO board) {
 		return boardMapper.update(board);
 	}
 
 	@Override
-	public int getTotalCnt() {
-		return boardMapper.getTotalCnt();
+	public int getTotalCnt(Criteria cri) {
+		return boardMapper.getTotalCnt(cri);
 	}
-	
-	
+
 }

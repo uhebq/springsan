@@ -4,25 +4,26 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 
-import com.momo.vo.BoardVo;
+import com.momo.vo.BoardVO;
+import com.momo.vo.Criteria;
 
 public interface BoardMapper {
 	
 	@Select("select * from tbl_board")
-	public List<BoardVo> getList();
+	public List<BoardVO> getList();
 
-	public List<BoardVo> getListXml();
+	public List<BoardVO> getListXml(Criteria cri);
 	
-	public int insert(BoardVo board); 
+	public int insert(BoardVO board); 
 
-	public int insertSelectKey(BoardVo board);
+	public int insertSelectKey(BoardVO board);
 
-	public BoardVo getOne(int bno);
+	public BoardVO getOne(int bno);
 	
 	public int delete(int bno);
 	
-	public int update(BoardVo board);
+	public int update(BoardVO board);
 	
-	public int getTotalCnt();
+	public int getTotalCnt(Criteria cri);
 
 }

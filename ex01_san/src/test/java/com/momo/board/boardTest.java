@@ -12,7 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.momo.mapper.BoardMapper;
-import com.momo.vo.BoardVo;
+import com.momo.vo.BoardVO;
+import com.momo.vo.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -27,7 +28,7 @@ public class boardTest {
 	@Test
 	public void getList() {
 		assertNotNull(boardMapper);
-		List<BoardVo> list = boardMapper.getList();
+		List<BoardVO> list = boardMapper.getList();
 		
 		list.forEach(board ->{
 			log.info("boardVo================");
@@ -40,7 +41,7 @@ public class boardTest {
 	
 	@Test
 	public void getListXml() {
-		List<BoardVo> list = boardMapper.getListXml();
+		List<BoardVO> list = boardMapper.getListXml(new Criteria());
 		
 		list.forEach(board ->{
 			log.info("boardVoXML================");
@@ -54,7 +55,7 @@ public class boardTest {
 	@Test
 	public void insert() {
 		
-		BoardVo board = new BoardVo();
+		BoardVO board = new BoardVO();
 		board.setTitle("제목");
 		board.setContent("내용");
 		board.setWriter("글쓴이");
@@ -67,7 +68,7 @@ public class boardTest {
 	
 	@Test
 	public void insertSelectKey() {
-		BoardVo board = new BoardVo();
+		BoardVO board = new BoardVO();
 		board.setTitle("제목");
 		board.setContent("내용");
 		board.setWriter("글쓴이");
@@ -79,7 +80,7 @@ public class boardTest {
 	
 	@Test
 	public void getOne() {
-		BoardVo board = boardMapper.getOne(10);
+		BoardVO board = boardMapper.getOne(10);
 		System.out.println("==================");
 		log.info(board);
 	}
@@ -94,7 +95,7 @@ public class boardTest {
 	public void update() {
 		int bno = 11;
 		
-		BoardVo board = new BoardVo();
+		BoardVO board = new BoardVO();
 		board.setBno(bno);
 		board.setTitle("제목 수정수정수정");
 		board.setContent("내용");
@@ -102,14 +103,14 @@ public class boardTest {
 		
 		int res = boardMapper.update(board);
 		
-		BoardVo getBoard = boardMapper.getOne(7);
+		BoardVO getBoard = boardMapper.getOne(7);
 		
 		assertEquals("제목 수정수정수정", getBoard.getTitle());
 	}
 	
 	@Test
 	public void getTotalCnt() {
-		int res = boardMapper.getTotalCnt();
+		int res = boardMapper.getTotalCnt(new Criteria());
 		
 		log.info("totalCnt : " + res);
 	}
