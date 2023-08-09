@@ -12,4 +12,7 @@ public interface MemberService {
 	int insert(Member member);
 	
 	int emailCheck(Member member);
+
+	int nicknameCheck(Member member);
+	
 }

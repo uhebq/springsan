@@ -13,9 +13,26 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberMapper memberMapper;
 	
+	@Autowired
+	BCryptPasswordEncoder encoder;
+	
 	@Override
-	public Member login(Member member) {
-		return memberMapper.login(member);
+	public Member login(Member paramMember) {
+		Member member = memberMapper.login(paramMember);
+		if(member != null) {
+			// 사용자가 입력한 비밀번호가 일치하는지 확인
+			// 사용자가 입력한 비밀번호, 데이터베이스에 암호화되어 저장된 비밀번호
+			boolean res = 
+					encoder.matches(paramMember.getPw()
+									, member.getPw());
+			
+			// 비밀번호 인증이 성공하면 member객체를 반환
+			if(res) {
+			return member;
+			}
+		}
+		
+		return null;
 	}
 	
 	@Override
@@ -33,6 +50,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int emailCheck(Member member) {
 		return memberMapper.emailCheck(member);
+	}
+	
+	@Override
+	public int nicknameCheck(Member member) {
+		return memberMapper.nicknameCheck(member);
 	}
 }
 

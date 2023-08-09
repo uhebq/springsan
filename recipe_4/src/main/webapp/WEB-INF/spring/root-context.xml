@@ -36,7 +36,11 @@
 	    <property name="maxUploadSizePerFile" value="2097152"></property>
 	    <property name="uploadTempDir" value ="file:/C:/upload/tmp"></property>
 	    <property name="maxInMemorySize" value="10485756"></property>
-	</bean> 
+	</bean>
+	
+	<bean id="bcryptPasswordEncoder" 
+	class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
 	
 	
 	

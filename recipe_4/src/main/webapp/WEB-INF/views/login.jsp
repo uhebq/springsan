@@ -143,6 +143,155 @@
     		fetchPost('/loginAction', obj, loginCheck)
     	})
     	
+    	signUpEmail.addEventListener('blur', function(){
+    		
+    		// 입력체크
+			if(!signUpEmail.value){
+				signupMsg.innerHTML = '아이디를 입력 해주세요';
+				return;
+			}
+			
+			// 파라메터 세팅
+			let obj={ email : signUpEmail.value };
+			console.log("아이디 체크", obj);
+			
+			// 아이디 체크 -> 서버에 다녀와야 해요
+			fetchPost('/emailCheck', obj, (map)=>{
+		    	  if(map.result == 'success'){
+		    		  emailCheckRes.value='1'; // 아이디 사용 가능
+		    		  signUpPw.focus();
+		    	  } else {
+		    		  emailCheckRes.value='0'; // 아이디 사용 불가능
+		    		  signUpEmail.focus();
+		    		  signUpEmail.value='';
+		    	  }
+		   		  signupMsg.innerHTML = map.msg; // 메세지 출력
+		    });
+    	});
+    	
+		signUpNickname.addEventListener('blur', function(){
+    		
+    		// 입력체크
+			if(!signUpNickname.value){
+				signupMsg.innerHTML = '닉네임을 입력 해주세요';
+				return;
+			}
+			
+			// 파라메터 세팅
+			let obj={ nickname : signUpNickname.value };
+			console.log("닉네임 체크", obj);
+			
+			// 닉네임 체크 -> 서버에 다녀와야 해요
+			fetchPost('/nicknameCheck', obj, (map)=>{
+		    	  if(map.result == 'success'){
+		    		  nicknameCheckRes.value='1'; // 닉네임 사용 가능
+		    		  signUpPNum.focus();
+		    	  } else {
+		    		  nicknameCheckRes.value='0'; // 닉네임 사용 불가능
+		    		  signUpNickname.focus();
+		    		  signUpNickname.value='';
+		    	  }
+		   		  signupMsg.innerHTML = map.msg; // 메세지 출력
+		    });
+    	});
+    	
+    	pwCheck.addEventListener('blur', function(){
+    		
+    		if(!signUpPw.value){
+				signupMsg.innerHTML = '비밀번호를 입력해주세요';
+				return;
+			}
+			if(!pwCheck.value){
+				signupMsg.innerHTML = '비밀번호 확인을 입력해주세요';
+				return;
+			}
+			if(signUpPw.value == pwCheck.value){
+				pwCheckRes.value=1;
+				signupMsg.innerHTML='';
+			} else{
+				signupMsg.innerHTML = '비밀번호가 일치하지 않습니다.';
+				pwCheckRes.value=0;
+				signUpPw.focus();
+				pwCheck.value='';
+				signUpPw.value='';
+			}
+    	});
+    	
+    	btnSignup.addEventListener('click', function(e){
+        	// 기본 이벤트 초기화
+        	e.preventDefault();
+        	
+        	let email = signUpEmail.value;
+        	let pw = signUpPw.value;
+        	let name = signUpName.value;
+        	let nickname = signUpNickname.value;
+        	let pNum = signUpPNum.value;
+        	
+        	
+        	if(!email){
+        		signupMsg.innerHTML = '아이디를 입력해주세요';
+        		return;
+        	}
+        	if(!pw){
+        		signupMsg.innerHTML = '비밀번호를 입력해주세요';
+        		return;
+        	}
+        	if(!name){
+        		signupMsg.innerHTML = '이름을 입력해주세요';
+        		return;
+        	}
+        	if(!nickname){
+        		signupMsg.innerHTML = '닉네임을 입력해주세요';
+        		return;
+        	}
+        	if(!pNum){
+        		signupMsg.innerHTML = '휴대폰 번호를 입력해주세요';
+        		return;
+        	}
+        	
+        	// 아이디 중복체크 확인
+        	if(emailCheckRes.value != 1){
+        		signupMsg.innerHTML = '아이디 중복체크를 해주세요';
+        		signUpEmail.focus();
+        		return;
+        	}
+        	
+        	// 닉네임 중복체크 확인
+        	if(nicknameCheckRes.value != 1){
+        		signupMsg.innerHTML = '닉네임 중복체크를 해주세요';
+        		signUpNickname.focus();
+        		return;
+        	}
+        	
+        	// 비밀번호 일치 확인
+        	if(pwCheckRes.value != 1){
+        		signupMsg.innerHTML = '비밀번호가 일치하는지 확인 해주세요';
+        		pwCheck.focus();
+        		return;
+        	}
+        	
+        	obj = {
+        			email : email
+        			, pw : pw
+        			, name : name
+        			, nickname : nickname
+        			, pnum : pNum
+        	}
+        	
+        	console.log('회원가입 obj : ', obj);
+        	
+        	// 회원가입 요청
+        	fetchPost('/register'
+        				, obj
+        				, (map)=>{
+					        if(map.result == 'success'){
+					        	location.href='/login?msg='+map.msg;
+					        } else {
+					        	signupMsg.innerHTML = map.msg;
+					        }
+					  });
+        })
+    	
     	function loginCheck(map){
     		// 로그인 성공 -> list 로 이동
     		// 실패 -> 메세지 처리
@@ -160,17 +309,18 @@
 <body class="text-center">
 	<main class="form-signin w-100 m-auto">
 
+	<!-- 로그인 폼 -->
   <form name='signinForm'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">로그인</h1>
 	<div id="msg"></div>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="email" placeholder="Password">
+      <input value="kkk@naver.com" type="text" class="form-control start" required="required" id="email" placeholder="email">
       <label for="email">Email</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="pw" placeholder="Password">
+      <input value="1234" type="password" class="form-control end" id="pw" placeholder="Password">
       <label for="pw">Password</label>
     </div>
 
@@ -183,25 +333,45 @@
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
   
+  <!-- 회원가입 폼 -->
   <form name='signupForm' style='display:none'>
     <img class="mb-4" src="/resources/css/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+    <h1 class="h3 mb-3 fw-normal">회원가입</h1>
 
+	<div id="signupMsg"></div>
     <div class="form-floating">
-      <input type="text" class="form-control" id="signupemail" placeholder="email">
+      <input type="text" class="form-control start" id="signUpEmail" placeholder="email">
       <label for="email">Email</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control middle" id="signuppw" placeholder="Password">
+      <input type="password" class="form-control middle" id="signUpPw" placeholder="Password">
       <label for="pw">Password</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="pwCheck" placeholder="Password">
+      <input type="password" class="form-control middle" id="pwCheck" placeholder="Password">
       <label for="pwCheck">PasswordCheck</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control middle" id="signUpName" placeholder="name">
+      <label for="name">Name</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control middle" id="signUpNickname" placeholder="nickname">
+      <label for="nickname">Nickname</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control end" id="signUpPNum" placeholder="pNum">
+      <label for="pNum">Phone without ' - '</label>
     </div>
     
     <button class="w-100 btn btn-lg btn-primary" id='btnSignup' type="submit">회원가입</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+    
+    <input type="text" value="0" id="emailCheckRes">
+    <input type="text" value="0" id="nicknameCheckRes">
+    <input type="text" value="0" id="pwCheckRes">
+    
+    
   </form>
 
   <button id='btnSignupView'>회원가입</button>

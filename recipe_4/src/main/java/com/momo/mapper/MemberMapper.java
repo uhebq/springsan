@@ -6,4 +6,6 @@ public interface MemberMapper {
 	public Member login(Member member);
 	public int insert(Member member);
 	public int emailCheck(Member member);
+	public int nicknameCheck(Member member);
+	
 }

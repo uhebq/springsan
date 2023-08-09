@@ -8,8 +8,8 @@
 	</select>
 	
 	<insert id="insert">
-	insert into rec_member(mno, email, pw, name, pnum) 
-		values (#{mno},#{email}, #{pw}, #{name}, #{pnum})
+	insert into rec_member(mno, email, pw, name, nickname, pnum) 
+		values (seq_member.nextval, #{email}, #{pw}, #{name}, #{nickname}, #{pnum})
 	</insert>
 	
 	<select id="emailCheck" resultType="int">
@@ -18,9 +18,15 @@
 	 where email=#{email}
 	</select>
 	
+	<select id="nicknameCheck" resultType="int">
+	select count(*) 
+	  from rec_member 
+	 where nickname=#{nickname}
+	</select>
+	
 	<!-- 권한조회  -->
 	<select id="getMemberRole" resultType="String">
-	select role_email from rec_memberrole where email=#{email}		
+	select role_email from rec_memberrole where email=#{email}
 	</select>
 </mapper>
 
