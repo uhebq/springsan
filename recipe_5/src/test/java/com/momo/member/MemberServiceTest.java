@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.momo.mapper.MemberMapper;
-import com.momo.service.MemberService;
-import com.momo.vo.Member;
+import com.project.mapper.MemberMapper;
+import com.project.service.MemberService;
+import com.project.vo.MemberVo;
 
 import lombok.extern.log4j.Log4j;
 
@@ -25,7 +25,7 @@ public class MemberServiceTest {
 	
 	@Test
 	public void test() {
-		Member member = new Member();
+		MemberVo member = new MemberVo();
 		member.setEmail("admin");
 		member.setPw("1234");
 		
@@ -37,7 +37,7 @@ public class MemberServiceTest {
 	
 	@Test
 	public void testInsert() {
-		Member member = new Member();
+		MemberVo member = new MemberVo();
 		member.setMno(4);
 		member.setEmail("admin12");
 		member.setPw("1234");
@@ -51,7 +51,7 @@ public class MemberServiceTest {
 	
 	@Test
 	public void testEmailCheck() {
-		Member member = new Member();
+		MemberVo member = new MemberVo();
 		member.setEmail("test2");
 		
 		int res = memberService.emailCheck(member);
