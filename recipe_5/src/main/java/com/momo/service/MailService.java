@@ -10,14 +10,12 @@ import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
-import javax.mail.Service;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.momo.vo.Member;
@@ -175,16 +173,3 @@ class ConfirmEmailGenerator {
         return code.toString();
     }
 }
-
-    // ... 이메일 전송 관련 메소드 등 ...
-
-//public void sendTemporaryPasswordByEmail(String email) {
-//  Member member = service.sendPw(member);
-//  if (member != null) {
-//      String temporaryPassword = generateTemporaryPassword();
-//      member.setPassword(temporaryPassword);
-//      service.save(member);
-//
-//      sendEmail(email, "임시 비밀번호 발급", "임시 비밀번호: " + temporaryPassword);
-//  }
-//}

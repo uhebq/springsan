@@ -30,42 +30,24 @@
 	 where name=#{name} and pNum=#{pnum}
 	</select>
 	
-	<select id="findPwBy" resultType="String">
-	select pw 
-	  from rec_member 
-	 where email=#{email} and name=#{name}
-	</select>
-	
 	<select id="sendPwBy" resultType="String">
 	select pw 
 	  from rec_member 
 	 where email=#{email} and name=#{name}
 	</select>
 	
-	<select id="resetPw" resultType="String">
-	select pw 
-	  from rec_member 
-	 where email=#{email} and name=#{name}
-	</select>
-	
-	<!-- MemberMapper.xml -->
 	<update id="updatePassword" parameterType="map">
 	    UPDATE rec_member
 	    SET pw = #{encodedPassword}
 	    WHERE email = #{email}
 	</update>
 	
-	<select id="ConfirmEmailBy" resultType="String">
-	select email 
-	  from rec_member 
-	 where email=#{email}
-	</select>
-	
 	<select id="emailExists" resultType="Boolean">
 	select count(*) 
 	  from rec_member 
 	 where email=#{email}
 	</select>
+	
 </mapper>
 
 

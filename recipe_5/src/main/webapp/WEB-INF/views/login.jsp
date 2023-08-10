@@ -143,32 +143,6 @@
     		fetchPost('/loginAction', obj, loginCheck)
     	})
     	
-    	signUpEmail.addEventListener('blur', function(){
-    		
-    		// 입력체크
-			if(!signUpEmail.value){
-				signupMsg.innerHTML = '이메일을 입력해 주세요.';
-				return;
-			}
-			
-			// 파라메터 세팅
-			let obj={ email : signUpEmail.value };
-			console.log("이메일 체크", obj);
-			
-			// 아이디 체크 -> 서버에 다녀와야 해요
-			fetchPost('/emailCheck', obj, (map)=>{
-		    	  if(map.result == 'success'){
-		    		  emailCheckRes.value='1'; // 이메일 사용 가능
-		    		  signUpPw.focus();
-		    	  } else {
-		    		  emailCheckRes.value='0'; // 이메일 사용 불가능
-		    		  signUpEmail.focus();
-		    		  signUpEmail.value='';
-		    	  }
-		   		  signupMsg.innerHTML = map.msg; // 메세지 출력
-		    });
-    	});
-    	
 		signUpNickname.addEventListener('blur', function(){
     		
     		// 입력체크
@@ -195,33 +169,52 @@
 		    });
     	});
     	
-    	pwCheck.addEventListener('blur', function(){
-    		
-    		if(!signUpPw.value){
-				signupMsg.innerHTML = '비밀번호를 입력해주세요';
-				return;
-			}
-			if(!pwCheck.value){
-				signupMsg.innerHTML = '비밀번호 확인을 입력해주세요';
-				return;
-			}
-			if(signUpPw.value == pwCheck.value){
-				pwCheckRes.value=1;
-				signupMsg.innerHTML='';
-			} else{
-				signupMsg.innerHTML = '비밀번호가 일치하지 않습니다.';
-				pwCheckRes.value=0;
-				signUpPw.focus();
-				pwCheck.value='';
-				signUpPw.value='';
-			}
-    	});
+        signUpPw.addEventListener('blur', function(){
+            if (!signUpPw.value) {
+                signupMsg.innerHTML = '비밀번호를 입력해주세요';
+                return;
+            }
+
+            if (signUpPw.value.length < 8) {
+                signupMsg.innerHTML = '비밀번호는 최소 8자리 이상이어야 합니다.';
+                signUpPw.value = '';
+                return;
+            }
+
+            // 소문자 알파벳, 숫자, 특수문자 포함 여부 검사
+            const passwordPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+            if (!passwordPattern.test(signUpPw.value)) {
+                signupMsg.innerHTML = '비밀번호는 소문자 알파벳, 숫자, 특수문자를 모두 포함해야 합니다.';
+                signUpPw.value = '';
+                return;
+            }
+            
+        });
+        
+        pwCheck.addEventListener('blur', function(){
+            if (!signUpPw.value) {
+                signupMsg.innerHTML = '비밀번호를 입력해주세요';
+                return;
+            }
+
+            if (pwCheck.value && signUpPw.value !== pwCheck.value) {
+                signupMsg.innerHTML = '비밀번호가 일치하지 않습니다.';
+                pwCheckRes.value = 0;
+                pwCheck.value = '';
+                return;
+            }
+
+            // 비밀번호 확인 필드까지 입력되었고 모든 검증 조건을 통과한 경우
+            pwCheckRes.value = 1;
+            signupMsg.innerHTML = '';
+        });
     	
     	btnSignup.addEventListener('click', function(e){
         	// 기본 이벤트 초기화
         	e.preventDefault();
         	
         	let email = signUpEmail.value;
+        	let comfirmemail = confirmCode.value;
         	let pw = signUpPw.value;
         	let name = signUpName.value;
         	let nickname = signUpNickname.value;
@@ -230,6 +223,10 @@
         	
         	if(!email){
         		signupMsg.innerHTML = '이메일을 입력해주세요';
+        		return;
+        	}
+        	if(!comfirmemail){
+        		signupMsg.innerHTML = '이메일로 받은 인증번호를 입력해주세요';
         		return;
         	}
         	if(!pw){
@@ -249,12 +246,30 @@
         		return;
         	}
         	
-        	// 아이디 중복체크 확인
-        	if(emailCheckRes.value != 1){
-        		signupMsg.innerHTML = '아이디 중복체크를 해주세요';
-        		signUpEmail.focus();
-        		return;
-        	}
+        	// 이메일 형식 검사
+            if (!isValidEmail(email)) {
+                signupMsg.innerHTML = '올바른 이메일 형식이 아닙니다.';
+                return;
+            }
+
+            // 비밀번호 최소 길이 확인
+            if (!isValidPassword(pw)) {
+                signupMsg.innerHTML = '비밀번호는 최소 8자리 이상이어야 합니다.';
+                return;
+            }
+
+            // 핸드폰 번호 자동 하이픈 입력 및 길이 확인
+            pNum = formatPhoneNumber(pNum);
+            if (!isValidPhoneNumber(pNum)) {
+                signupMsg.innerHTML = '올바른 핸드폰 번호를 입력해주세요.';
+                return;
+            }
+        	
+        	// 이메일 인증번호 검증 유무를 확인
+        	if (document.getElementById('confirmCode').readOnly === false) {
+                signupMsg.innerHTML = '인증번호를 확인해주세요.';  // 인증번호를 확인하지 않았을 경우 메시지 출력
+                return;
+            }
         	
         	// 닉네임 중복체크 확인
         	if(nicknameCheckRes.value != 1){
@@ -286,32 +301,13 @@
         				, (map)=>{
 					        if(map.result == 'success'){
 					        	location.href='/login?msg='+map.msg;
+					        	alert ('회원가입이 완료되었습니다.');
 					        } else {
 					        	signupMsg.innerHTML = map.msg;
 					        }
 					  });
         })
 		
-		function confirmEmailCheck() {
-	        var email = $('#signUpEmail').val();
-	
-	        $.ajax({
-	            type: "POST",
-	            url: "/confirmEmail",
-	            data: { email: email },
-	            success: function(response) {
-	                if (response.success) {
-	                    alert('인증번호가 이메일로 발송되었습니다.');
-	                } else {
-	                    alert('가입되지 않은 이메일입니다.');
-	                }
-	            },
-	            error: function() {
-	                alert('요청 처리 중 오류가 발생했습니다.');
-	            }
-	        });
-    	}
-        
     	function loginCheck(map){
     		// 로그인 성공 -> list 로 이동
     		// 실패 -> 메세지 처리
@@ -322,7 +318,95 @@
     		}
     		console.log(map);
     	}
+    	
+    	document.getElementById('confirmEmailBtn').addEventListener('click', function() {
+    	    var email = document.getElementById('signUpEmail').value;
+
+    	    // 이메일 형식 검증
+    	    if (!isValidEmail(email)) {
+    	        alert('올바른 이메일 형식이 아닙니다.');
+    	        return;
+    	    }
+    	    
+    	    fetch('/confirmEmail', {
+    	        method: 'POST',
+    	        headers: {
+    	            'Content-Type': 'application/json',
+    	        },
+    	        body: JSON.stringify({ email: email }),
+    	    })
+    	    .then(response => response.json())
+    	    .then(data => {
+    	    	if (data.exists) {
+    	            alert('이미 가입되어 있는 이메일입니다.');
+    	        } else if (data.success) {
+    	            alert('인증번호가 이메일로 발송되었습니다.');
+    	        } else {
+    	            alert('오류가 발생했습니다.');
+    	        }
+    	    })
+    	    .catch(error => {
+    	        console.error('오류 발생:', error);
+    	        alert('요청 처리 중 오류가 발생했습니다.');
+    	    });
+    	});
+    	
+    	document.getElementById('confirmEmailCheck').addEventListener('click', function() {
+    	    var confirmCode = document.getElementById('confirmCode').value;
+
+    	    fetch('/verifyConfirmationCode', {
+    	        method: 'POST',
+    	        headers: {
+    	            'Content-Type': 'application/json',
+    	        },
+    	        body: JSON.stringify({ confirmCode: confirmCode }),
+    	    })
+    	    .then(response => response.json())
+    	    .then(data => {
+    	        if (data.success) {
+    	        	alert('인증되었습니다.');
+    	        	document.getElementById('confirmCode').readOnly = true;
+    	        	//document.getElementById('confirmationResult').textContent = '인증되었습니다.';
+    	        } else {
+    	        	alert('인증번호가 일치하지 않습니다.');
+    	        	document.getElementById('confirmCode').value = '';
+    	            //document.getElementById('confirmationResult').textContent = '인증번호가 일치하지 않습니다.';
+    	        }
+    	    })
+    	    .catch(error => {
+    	        console.error('오류 발생:', error);
+    	        alert('요청 처리 중 오류가 발생했습니다.');
+    	    });
+    	});
+    	
+    	// 이메일 형식 유효성 검사 함수
+    	function isValidEmail(email) {
+    	    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    	    return emailPattern.test(email);
+    	}
+
+    	// 비밀번호 최소 길이 확인 함수
+    	function isValidPassword(password) {
+    	    return password.length >= 8;
+    	}
+
+    	// 핸드폰 번호 자동 하이픈 입력 함수
+    	function formatPhoneNumber(input) {
+    	    const cleaned = ('' + input).replace(/\D/g, '');
+    	    const match = cleaned.match(/^(\d{3})(\d{4})(\d{4})$/);
+    	    if (match) {
+    	        return match[1] + '-' + match[2] + '-' + match[3];
+    	    }
+    	    return input;
+    	}
+
+    	// 핸드폰 번호 길이 확인 함수
+    	function isValidPhoneNumber(phoneNumber) {
+    	    return phoneNumber.replace(/-/g, '').length === 11;
+    	}
+    	
       })
+      
     </script> 
     <script type="text/javascript" src="/resources/js/common.js"></script>
   </head>
@@ -353,7 +437,6 @@
     <button class="w-100 btn btn-lg btn-primary" type="submit" id='btnSignin'>로그인</button>
     
     <a href = "/findEmailForm">이메일 찾기</a>
-    <a href = "/findPwForm">비밀번호 찾기</a>
     <a href = "/sendPwForm">임시 비밀번호 발급</a>
     
     
@@ -365,14 +448,14 @@
 
 	<div id="signupMsg"></div>
     <div class="form-floating">
-      <input type="text" class="form-control start" id="signUpEmail" placeholder="email">
-      <button onclick="confirmEmailCheck()" type="button">인증번호 전송</button>
+      <input type="email" class="form-control start" id="signUpEmail" placeholder="email">
+      <button id="confirmEmailBtn" type="button">인증번호 전송</button>
       <label for="email">Email</label>
     </div>
     <div class="form-floating">
-      <input type="text" class="form-control middle" id="confirmEmail2" placeholder="email">
-      <button id='confirmcheck' type="button">인증번호 확인</button>
-      <label for="email">ConfirmEmail</label>
+      <input type="text" class="form-control middle" id="confirmCode" placeholder="comfirmemail">
+      <button id='confirmEmailCheck' type="button">인증번호 확인</button>
+      <label for="comfirmemail">ConfirmEmail</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control middle" id="signUpPw" placeholder="Password">
@@ -396,9 +479,8 @@
     </div>
     <button class="w-100 btn btn-lg btn-primary" id='btnSignup' type="submit">회원가입</button>
     
-    <input type="text" value="0" id="emailCheckRes">
-    <input type="text" value="0" id="nicknameCheckRes">
-    <input type="text" value="0" id="pwCheckRes">
+    <input type="hidden" value="0" id="nicknameCheckRes">
+    <input type="hidden" value="0" id="pwCheckRes">
     
     
   </form>

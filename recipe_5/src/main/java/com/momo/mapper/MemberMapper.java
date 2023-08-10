@@ -11,18 +11,10 @@ public interface MemberMapper {
 	public int nicknameCheck(Member member);
 	
 	public String findEmailBy(Member member);
-	public String findPwBy(Member member);
+	
 	public String sendPwBy(Member member);
-
 	void updatePassword(@Param("email") String email, @Param("encodedPassword") String encodedTemporaryPassword);
 	
-//	public Member findByEmail(@Param("email") String email);
-//	public void updatePassword(@Param("email") String email, @Param("password") String password);
-
-//	public String getPwByIdNameRrn(Member member);
-	
-	public String resetPw(Member member);
-	public String confirmEmailBy(Member member);
-	
 	public boolean emailExists(String email);
+	
 }
