@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String sendPwBy(MemberVo member, Model model) {
 		String pw = membermapper.sendPwBy(member);
-		
+		System.out.println("pw : " + pw);
 		if (pw != null) {
 			// 임시 비밀번호 생성
 			String temporaryPassword = PasswordGenerator.generateRandomPassword();

@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.momo">
+	<logger name="com.project">
 		<level value="debug" />
 	</logger>
 	
