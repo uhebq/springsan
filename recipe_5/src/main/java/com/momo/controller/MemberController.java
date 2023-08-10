@@ -31,7 +31,7 @@ public class MemberController extends CommonRestController{
 	 * @return
 	 */
 	@GetMapping("/login")
-	public String login() {
+	public String loginPage() {
 		return "login";
 	}
 	
@@ -47,7 +47,7 @@ public class MemberController extends CommonRestController{
 	}
 	
 	@GetMapping("/signup")
-	public String signup() {
+	public String signupPage() {
 		return "signup";
 	}
 	
