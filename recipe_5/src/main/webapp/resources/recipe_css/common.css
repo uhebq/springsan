@@ -1,0 +1,330 @@
+@charset "UTF-8";
+
+/* -------------------- 전체 폰트 설정 -------------------- */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:not(i) {
+  font-family: "NanumSquareNeo-Variable" !important;
+} 
+
+body {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  background: #fff;
+}
+
+a {
+  color: #F7863B;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  text-decoration: none;
+}
+a:hover, a:active, a:focus {
+  color: #F7863B;
+  outline: none;
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 20px;
+} 
+
+h1, h2, h3, h4, h5, h6, figure {
+  color: #000;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+}
+
+::-webkit-selection {
+  color: #fff;
+  background: #F7863B;
+}
+
+::-moz-selection {
+  color: #fff;
+  background: #F7863B;
+}
+
+::selection {
+  color: #fff;
+  background: #F7863B;
+}
+
+/* 체크박스 관련 */
+input[type="checkbox"]
+{
+	accent-color: #F7863B;
+}
+
+/* 포인트 색상 */
+.btn-primary {
+    background: #F7863B;
+    color: #fff;
+    border: 2px solid #F7863B !important;
+}
+
+
+/* 컨텐츠 섹션  */
+section#main div.container {
+	background: #fff;
+	border-radius: 1em;
+	width: 85%;
+	max-width: 85%;
+}
+
+/* input 배경색 */
+form input[type="text"], form input[type="email"], form input[type="password"], form select, form textarea {
+	    background-color: #e6e6e6 !important;
+}
+
+.form-control option:hover, 
+.form-control option:checked {
+	background: #F7863B50 !important
+}
+
+.form-control:active, .form-control:focus {
+	    outline: #F7863B;
+	    box-shadow: none;
+	    border:2px solid #F7863B;
+}
+
+
+/* -------------------- header.jsp -------------------- */
+#header {
+	background: #f7863b36;
+}
+
+#header h1 {
+	font-family: 'omyu_pretty' !important;
+	font-size: 5em;
+	font-weight: 500;
+	letter-spacing: 3px;
+}
+
+#header > div.container {
+	padding: 9em 0 7em 0;
+	    border: none;
+    box-shadow: none;
+}
+
+.search-wrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 77.5%;
+    left:50%;
+}
+
+.search-wrapper * {
+	padding: 0;
+}
+
+.search-wrapper .input-holder {    
+    height: 75px;
+    width:75px;
+    overflow: hidden;
+    background: rgba(255,255,255,0);
+    border-radius:6px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-wrapper .input-holder input {
+	box-shadow: none;	
+}
+
+.search-wrapper.active .input-holder {
+    width:550px;
+    border-radius: 50px;
+    background: #FFF;
+	box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+    transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+}
+.search-wrapper .input-holder .search-input {
+    width:100%;
+    height: 45px;
+    padding:0px 70px 0 20px;
+    opacity: 0;
+    position: absolute;
+    top:0px;
+    left:0px;
+    background: transparent;
+    box-sizing: border-box;
+    border:none;
+    outline:none;
+    font-family:"Open Sans", Arial, Verdana;
+    font-size: 1.5em;
+    font-weight: 400;
+    line-height: 20px;
+    color:#222;
+    transform: translate(0, 60px);
+    transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+    transition-delay: 0.3s;
+}
+.search-wrapper.active .input-holder .search-input {
+    opacity: 1;
+    transform: translate(15px, 17.5px);
+    background-color: #fff !important;
+}
+.search-wrapper .input-holder .search-icon {
+    width:70px;
+    height:70px;
+    border:none;
+    border-radius:50%;
+    background: #F7863B;
+    padding:0px;
+    outline:none;
+    position: relative;
+    z-index: 2;
+    float:right;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-wrapper .input-holder .search-icon i {
+	color: #fff !important;
+	font-size: 2em;	
+}
+
+.search-wrapper.active .input-holder .search-icon {
+    width: 50px;
+    height:50px;
+    margin: 10px;
+    border-radius: 30px;
+}
+
+.search-wrapper.active .input-holder .search-icon i {
+	font-size: 1.5em;	
+}
+
+.search-wrapper .input-holder .search-icon span {
+    display: inline-block;
+    vertical-align: middle;
+    position:relative;
+    transition: all 1s cubic-bezier(0.650, -0.600, 0.240, 1.650);
+}
+.search-wrapper.active .input-holder .search-icon span {
+    transform: rotate(360deg);
+}
+
+.search-wrapper .searchClose {
+    position: absolute;
+    z-index: 1;
+    top:50%;
+    right:20px;
+    width:25px;
+    height:25px;
+    cursor: pointer;
+    transition: all 1s cubic-bezier(0.285, -0.450, 0.935, 0.110);
+    transition-delay: 0.2s;
+}
+
+.search-wrapper .searchClose i {
+	font-size: 1.5em;
+	color: #F7863B;
+}
+
+.search-wrapper.active .searchClose {
+    right:-50px;
+    transform: rotate(360deg) translate(-50%, -50%);
+    transition: all 1s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+    transition-delay: 0.5s;
+    opacity: 1;;
+}
+
+.search-wrapper .search-icon:hover {
+	background: #f9a974;
+}
+
+/* 컨텐츠 섹션 */
+section#main {
+    padding: 0;
+} 
+
+section#main {
+    background: #f7863b36;
+} 
+
+
+/* -------------------- footer.jsp -------------------- */
+#footer {
+	padding: 6em 0;
+    border-top: 0;
+    background: #f7863b36;
+}
+
+#copyright {
+    border-top: 0; 
+    text-align: center;
+	margin-top: 0; 
+	padding-top: 0; 
+}
+
+.gototop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.gototop.active {
+  opacity: 1;
+  visibility: visible;
+}
+.gototop a {
+  width: 50px;
+  height: 50px;
+  display: table;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+}
+.gototop a i {
+  height: 50px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.gototop a:hover, .gototop a:active, .gototop a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+.gototop a.js-gotop {
+	width: 70px;
+    	height: 70px;
+	background: #F7863B;
+	border-radius: 50%;
+	box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+} 
+.gototop a.js-gotop:hover {
+	background: rgb(247 134 59 / 70%);
+}
+.gototop a.js-gotop i {
+	font-size: 2em;
+}
+
+a.icon {
+	color: #fff;
+}

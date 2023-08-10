@@ -196,6 +196,7 @@ public class MemberController{
 
     @PostMapping("/recipe/findEmail")
     public String findEmail(MemberVo member, Model model) {
+    	// 아이디 찾기 로직을 구현
     	String email = memberservice.findEmailBy(member);
     	System.out.println("email : " + email);
     	if (email != null) {
@@ -216,6 +217,7 @@ public class MemberController{
 
     @PostMapping("/recipe/sendPw")
     public String sendPw(MemberVo member, Model model) {
+    	// 아이디 찾기 로직을 구현
     	return memberservice.sendPwBy(member, model);
     }
     

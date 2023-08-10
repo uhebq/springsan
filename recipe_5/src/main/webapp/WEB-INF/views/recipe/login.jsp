@@ -110,7 +110,7 @@
       }
 
     </style>
-    <script type="text/javascript" src="/resources/js/common.js"></script>
+    <script type="text/javascript" src="/resources/recipe_js/common.js"></script>
     <script>
 
       window.addEventListener('load',function(){

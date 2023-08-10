@@ -1,0 +1,808 @@
+@charset "UTF-8";
+
+ <style>
+ 		
+
+ 		
+	.cntClass{
+		
+		font-size: 22px;
+    	margin-left: 10px;
+    	color: #d97634;
+	}
+	
+	.moreP{
+		width: 100px;
+	    height: 100px;
+	    position: absolute;
+	    background-color: #00000087;
+	    margin-top: 10px;
+	    margin-left: 945px;
+	    display: flex;
+	    text-align: center;
+	    align-items: center;
+	    justify-content: center;
+	    font-weight: 900;
+	    color: floralwhite;
+	    font-family: 'IBM Plex Sans KR';
+	    cursor: pointer;
+	}
+	
+	.more-photos-background {
+	  background-color: rgba(0, 0, 0, 0.5);
+	  display: inline-block;
+	  position: relative;
+	}
+	
+	.more-photos-background::after {
+	  content: '더보기';
+	  color: white;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  cursor: pointer;
+	}
+	
+	#photoReviewReplyDiv{
+		margin-top: 90px;
+	}
+
+	#grBtn{
+		/* background-color: #F7863B;
+	    border: 1px; */
+	    color: white;
+	    /* border-radius: 0px;
+	    font-family: 'IBM Plex Sans KR';
+	    font-weight: 600;
+	    letter-spacing: 1px; */
+	    width: 100px;
+	    padding: 0;
+	    margin-top: 56px;
+	}
+
+	#grForm{
+	 	
+	 	display: flex;
+    	justify-content: center;
+    	margin-top: 30px;	
+		
+	}
+
+	.ingredientImgDiv{
+		width: 100%;
+		height: 100%;
+		
+	}
+
+	.materialName{
+ 			
+ 		font-weight: 900;
+ 		font-family: 'IBM Plex Sans KR';
+ 		
+ 	}
+ 		
+
+	.italicTitle{
+		font-size: 20px;
+    	font-style: italic;
+    	color: #f7863b;
+	}
+
+	.writeBtn{
+		width: 100px;
+    	/* background-color: #F7863B; */
+    	height: 77%;
+    	color: white;
+    	/* font-weight: 800;
+    	border: 1px; */
+    	padding:0;
+	}
+
+	.media-body {
+		margin-bottom: 30px;
+		border-bottom: 1px solid;
+		border-color: #00000045;
+	}
+
+	.media-heading{
+		font-size: 15px;
+		display: flex;
+		
+	}
+	
+	.reply-regdate{
+		margin-left: 10px;
+		opacity: 50%;
+		margin-top:3px;
+	}
+	
+	.reply-regdate-star{
+		margin-left: 10px;
+		
+	}
+	
+	.reply-star{
+		font-size: 18px;
+	}
+
+	.info_name_f{
+ 			font-size: 18px;
+ 			color: #F7863B;
+ 		}
+ 		
+ 	.reply_list_cont{
+ 		
+ 		font-size:13px;
+ 		margin-bottom: 5px;
+    	margin-top: 10px;
+ 	}	
+
+	
+
+<!-- 모달창 포토리스트 -->
+
+	
+	.roket {
+		margin-left: 10px;
+	}
+	
+	.stepFont-Family {
+		font-family: 'IBM Plex Sans KR';
+		
+	}
+	
+	.stepNumber {
+		
+		display: flex;
+	    font-size: 30px;
+	    width: 40px;
+	    height: 40px;
+	    border: 2px solid;
+	    border-radius: 50%;
+	    text-align: center;
+	    align-items: center;
+	    justify-content: center;
+	    color: #e97b32;
+	}
+	
+	li.photoList {
+		width: 100px !important;
+		display: inline-block;
+		margin: 5px;
+	}
+	
+	.photoList img{
+            
+            width: 100px;
+            height: 100px;
+        }
+
+		.w100{
+		
+			width : 100px;
+			height : 100px;
+		
+		}
+		
+		.w136{
+			width: 100px;
+			height : 100px;
+		}
+		
+		.w20p{
+			width: 20%;
+			height: 100%
+		}
+		
+		.MB40T20{
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		
+		/*안의 요소 들여쓰는 마진*/
+		.elementsMargin{
+		 	/*margin: 30px*/
+		}
+		
+		.ingreModal_wrap{
+			
+			width: 100%;
+			
+		}
+		
+		.ingreModal_img{
+			border-radius: 50%;
+			width: 100px;
+			height: 100px;
+			margin-left: 20px;
+			
+		}
+		
+		.ingreModalName{
+			font-size: 40px;
+			vertical-align: middle;
+			margin-left: 20px;
+		}
+		
+		.ingredientInfoDiv th{
+			   
+		    background: #f7863b8a;
+		    font-weight: 500;
+		    padding: 12px 0 12px 40px;
+		    font-size: 15px;
+		    border-top: 1px solid;
+		    border-color: #995c307d;
+		}
+		
+		.ingredientInfoDiv td {
+		   
+		   	font-weight: normal;
+		    padding: 12px 20px;
+		    font-size: 15px;
+		    width: 300px;
+		    border: 1px solid;
+		    border-color: #00000038;
+		}
+		
+		.ingredientInfoDiv{
+			margin-top: 20px;
+   		 	border-top: 1px solid;
+		}
+		
+		
+<!-- 이미지 미리보기 -->
+
+	.bodySection{
+	margin-top: 20px;
+	}
+
+	#image_container{
+    /* Set the container size to match the image size */
+    position:absolute;
+    width: auto;
+    height: auto;
+    max-width: 30%;
+    max-height: 30%;
+	}
+
+/* Set the image to be responsive inside the container */
+	#image_container img {
+	    width: 100px;
+	    height: 100px;
+	    /* object-fit: contain; */
+	    
+	}
+
+<!-- ----------------->
+
+
+		#generalReplyContainer{
+			margin-top: 20px;
+		}
+		
+		#viewContainer {
+			margin : 0 auto;
+		}
+			
+		.material-span {
+			/* Add some padding on the right side of the text "Eggs" */
+			padding-left: 0px;
+			float: right;
+			margin-right: 10px;
+			font-family: 'IBM Plex Sans KR';
+    		color: #00000078;
+			/* Alternatively, you can use margin to create a gap between the text and <span> */
+			/* margin-right: 10px; */
+		}
+		
+		#roketBtn {
+			float: right;
+		}
+		
+		
+		#headIntroDiv {
+			margin-top : 30px;
+			width : 100%;
+		}
+		
+		#headTitle {
+		  display: flex;
+		  align-items: center; /* Align items vertically at the center */
+		  justify-content: center;
+		}
+		
+		#h1-title {
+		  max-width: 800px;
+		  margin: 0; /* Remove default margin for <h1> */
+		  font-family: 'IBM Plex Sans KR', sans-serif;
+		}
+		
+		#likeBtn {
+		  margin-top : 7px;
+		  border: 1px solid;
+		  border-color: #d79587;
+		  font-weight: 600;
+		  font-size: 13px;
+		  color: #FFF;
+	    font-size: 13px;
+	    width: 70px;
+	    height: 70px;
+	    border: none;
+	    border-radius: 50%;
+	    background: #F7863B;
+	    padding: 0px;
+    	cursor: pointer;
+		}
+		
+		#likeBtn:hover {
+			background: rgb(247 134 59 / 70%);
+		}
+		
+		
+		.h3FW800 {
+ 			font-weight: 800;
+		    font-family: 'IBM Plex Sans KR', sans-serif;
+		    padding-bottom: 3px;
+		    /* border-bottom: 2px solid;
+		    border-color: #0000005e; */
+		    display: inline-block;
+		    position: relative;
+ 		}
+ 		
+ 		.h3FW800:after {
+ 			position: absolute;
+ 			display: inline-block;
+ 			content: "";
+ 			background: #f7863b50;
+ 			width: 100%;
+ 			height: 10px;
+ 			left: 0;
+ 			bottom: 0;
+ 		}
+ 		
+		/* 모달 스타일 */
+			.modal {
+			    display: none;
+			    position: fixed;
+			    z-index: 1;
+			    left: 0;
+			    top: 0;
+			    width: 100%;
+			    height: 100%;
+			    overflow: auto;
+			    background-color: rgba(0, 0, 0, 0.4);
+			    font-family: 'IBM Plex Sans KR';
+			}
+			
+			#container::-webkit-scrollbar,
+			#photoReviewModalList::-webkit-scrollbar {
+			    width: 10px;  
+			}
+			
+			#container::-webkit-scrollbar-thumb,
+			#photoReviewModalList::-webkit-scrollbar-thumb {
+			    background: #F7863B; /* 스크롤바 색상 */
+			    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+			}
+			
+			#container::-webkit-scrollbar-track,
+			#photoReviewModalList::-webkit-scrollbar-track {
+			    background: #ffd5b9;  /*스크롤바 뒷 배경 색상*/
+			}
+			
+			.ingre-modalW{
+				width: 500px;
+			}
+			
+			.photoModal-content{
+				display: flex;
+			    /* flex-wrap: wrap; */
+			    justify-content: space-between;
+			    background-color: #fefefe;
+			    /* margin: 15% auto; */
+			    padding: 20px;
+			    border: 1px solid #888;
+			   /*  width: 1100px; */
+			    /* max-height: 80%; */
+			    width: 70%;
+			}
+			
+			.modal-content {
+			    display: flex;
+			    /* flex-wrap: wrap; */
+			    justify-content: space-between;
+			    background-color: #fefefe;
+			    /* margin: 15% auto; */
+			    padding: 20px;
+			    border: 1px solid #888;
+			   /*  width: 1100px; */
+			    /* max-height: 80%; */
+			    width: 70%;
+			}
+			
+			#container {
+			    flex-basis: 70%; /* 가능한 가로 공간의 70%를 차지 */
+			    max-width: 70%;
+			    height: 100%;
+    			overflow: hidden;
+    			overflow-y: auto;
+    			height: 500px;
+    			padding: 0 20px;
+			}
+			
+			img.d-block {
+				margin: 0 auto;
+			}
+			
+			#photoReviewModalList {
+			    /*flex-basis: 40%; /* 가능한 가로 공간의 30%를 차지 */
+			    width:250px;
+			    height: 500px;
+			    overflow-y: auto; /* 내용이 넘칠 경우 수직 스크롤바 추가 */
+			    margin-left: 50px;
+			}
+			
+			.close {
+			    color: #aaa;
+			    font-size: 28px;
+			    font-weight: bold;
+			    align-self: flex-start; /* 닫기 버튼을 상단에 정렬 */
+			    margin-left: 420px;
+			}
+			
+			.close:hover, .close:focus {
+			    color: black;
+			    text-decoration: none;
+			    cursor: pointer;
+			}
+			
+			#photoReviewDiv {
+			    width: 100%;
+			    display: flex;
+			}
+		
+		/*#recipeStepDiv {
+				display: flex;
+				
+			}*/
+	
+	<!-- 요리순서 css -->
+	
+		#recipeStepDiv {
+            background-color: antiquewhite;
+            display: flex;
+        }
+
+        /* Set the container to flex and set the direction to row */
+        #recipeContainer {
+        	font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            padding: 40px;
+           font-family: 'Noto Sans KR', sans-serif;
+            /*align-items: center; 텍스트 중앙정렬 */
+        }
+
+        /* Add some margin between the text and the image */
+        #recipeContainer > div:first-child {
+            margin-right: 10px;
+        }
+
+        /* Optional: Add some styles to the image */
+        #recipeContainer img {
+           	
+           	border-radius: 10px;
+            width: 300px;
+            height: 200px;
+        }
+        
+        #replyWriteForm {
+        	display: flex;
+        }
+        
+        
+ 		
+ 		.materialName{
+ 			font-weight: 900;
+ 			font-family: 'IBM Plex Sans KR';
+ 		}
+ 		
+ 		
+ 		.circle-test{
+ 		
+		  width: 50px;
+	      height: 50px;
+	      border-radius: 50%;
+	      background-color: rgb(233, 129, 118);
+ 		
+ 		}
+ 		
+ 		.stepFont {
+ 			font-size: 22px;
+ 		}
+ 		
+ 		.sectionTitle {
+ 			
+ 			/*margin-bottom: 40px;*/
+ 			display: inline-block;
+ 			
+ 		}
+ 		
+ 		
+ 		/* 일반 댓글 간격 */
+ 		
+ 		.generalHead {
+ 		
+ 			margin-bottom: 30px;
+ 		}
+ 		/* 요리순서 앞 아이콘 */
+ 		
+ 				
+ 		
+        /* Add your CSS styles here */
+
+        /* Example styles for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #34594bd9;
+        }
+
+
+	  	/* 재료관련  */
+		.materialContent {
+			display: flex;
+		}
+		
+		.materialB {
+		 	width : 100%;
+		 	display: block;
+		 	font-family: 'IBM Plex Sans KR';
+		}
+
+
+		.viewContainer {
+			
+			margin: 0 auto;
+			width: 1200px;
+			background-color: white;
+		}
+
+		
+		ul {
+		    margin-top: 10px;
+		    list-style-type: none;
+		    width: 100%;
+		    padding: 0px;
+		    line-height: 40px;
+		}
+		
+		.materialContent li {
+			list-style: none;
+			width: 45%;
+			display: inline-block;
+			margin: 3px 18px;
+			
+			padding: 0 7px;
+		}
+		
+		
+		#replyPhotoForm_Test{
+			display: flex;
+		}
+		
+		/**/
+		#recipeContainer {
+			
+			width: 100%;
+			
+		}
+		#moreGRButton{
+			background-color: #c7897c1a;
+		    color: #00000082;
+		    font-weight: 700;
+		    border-color: #8d8d79;
+		    margin: 0 auto;
+		    padding: 15px 30px;
+		    border-radius: 0.375em;
+		}
+		
+		#reduceGRBtn{
+			background-color: #c7897c1a;
+		    color: #00000082;
+		    font-weight: 700;
+		    border-color: #8d8d79;
+		    margin: 0 auto;
+		    padding: 15px 30px;
+		    border-radius: 0.375em;
+		}
+		
+		#moreButton {
+		    background-color: #c7897c1a;
+		    color: #00000082;
+		    font-weight: 700;
+		    border-color: #8d8d79;
+		    margin: 0 auto;
+		    padding: 15px 30px;
+		    border-radius: 0.375em;
+		}
+		
+		#reduceBtn{
+			background-color: #c7897c1a;
+		    color: #00000082;
+		    font-weight: 700;
+		    border-color: #8d8d79;
+		    margin: 0 auto;
+		    padding: 15px 30px;
+		    border-radius: 0.375em;
+		}
+		
+		.stepContent {
+			width: 50%;
+		}
+		
+		.stepImg {
+			float: right;
+		
+		}	
+		
+		.margin-T12{
+			
+			margin-top: 12px;
+			
+		}
+		
+		.margin-B30{
+			margin-bottom: 30px
+		}
+
+        .header {
+            /* Styles for the upper part */
+            background-color: #fff;
+            padding: 20px 40px;
+            text-align: center;
+            /* border: 1px solid; */
+             font-family: 'IBM Plex Sans KR';
+        }
+
+        .material {
+            /* Styles for the material part */
+            background-color: #fff;
+            padding: 20px 40px;
+            height: 100%;
+            border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+            
+           
+            
+        }
+
+        .cooking-order {
+            /* Styles for the cooking order part */
+            background-color: #fff;
+            padding: 20px 40px;
+            border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+            
+        }
+        
+        
+        .regDottd {
+		   
+		    border: 2px dashed;
+		    height: 40px;
+		    font-size: 14px;
+		    color: #978e8e;
+		    /* float: left; */
+		    text-align: center;
+		}
+
+        .cooking-review {
+            /* Styles for the cooking review part */
+            background-color: #fff;
+            padding: 20px 40px;
+             border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+            
+        }
+
+        .recently-viewed {
+            /* Styles for the recently viewed section */
+            background-color: #fff;
+            padding: 20px; 
+            marign-top: 40px; padding-top:20px;
+            display: flex;
+            
+        }
+        
+        .recentPageDiv {
+		    margin-right: 10px;
+		    cursor: pointer;
+		    width: min-content;
+		    
+		    /* Initially set the outline to create a hidden effect */
+		    outline: 2px solid transparent; /* Initial transparent outline */
+		    
+		    /* Set the transition effect for the outline color property */
+		    transition: outline-color 0.3s ease;
+		}
+		
+		.recentPageDiv:hover {
+		    /* Change outline color on hover */
+		    outline-color: #F7863B;
+		}
+
+        /* Example styles for photo review section */
+        .photo-review {
+            /* Styles for the photo review part */
+            background-color: #fff;
+        }
+        
+        .generalReply {
+        	background-color: #fff;
+            padding: 20px 40px;
+           border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+            
+            font-family: 'IBM Plex Sans KR';
+        }
+
+        .photo-review img {
+            /* Styles for displaying images in photo review */
+            /*max-width: 100%;
+            height: auto;*/
+            display: block;
+            margin: 10px auto;
+            margin-right: 5px;
+        }
+
+        /* Example styles for general comment section */
+        .general-comment {
+            /* Styles for the general comment part */
+            background-color: #fff;
+            margin-top: 0px;
+   			 padding: 5px 60px;
+        }
+
+        /* Example styles for comment writing section */
+        .comment-writing {
+            /* Styles for the comment writing part */
+            background-color: #fff;
+            padding: 20px;
+            
+            /*border-top: 5px solid #ddd;*/ 
+            marign-top: 40px; padding-top:20px;
+            
+            font-family: 'IBM Plex Sans KR';
+             
+        }
+        
+        
+        .writerInfoDiv {
+        
+       		 background-color: #fff;
+            padding: 20px 40px;
+            border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+            
+        }
+        
+         /* 수정 (MI, 2023/08/08) */
+         .general-commentContainer  {
+         	border-top: 5px solid #ddd; marign-top: 40px; padding-top:20px;
+         }
+         
+         .materialContent i {
+         	cursor: pointer;
+         }
+         
+         .modal {
+         	justify-content: center;
+         	align-items: center;
+         }
+	
+		
+		        
+    </style>
