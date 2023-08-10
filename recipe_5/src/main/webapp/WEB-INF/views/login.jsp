@@ -115,8 +115,8 @@
       window.addEventListener('load',function(){
         
     	// 로그인 폼 출력
-        btnSignupView.addEventListener('click',function(){
-        	location.href = '/signup';
+        btnRegisterView.addEventListener('click',function(){
+        	location.href = '/register';
         })
 		
         // 로그인
@@ -150,8 +150,8 @@
     	
       })
       
-      function goToSignup() {
-        location.href = '/signup';
+      function goToRegister() {
+        location.href = '/register';
     	}
       
     </script> 
@@ -189,7 +189,7 @@
     
   </form>
 
-  <button id='btnSignupView' onclick="goToSignup()">회원가입</button>
+  <button id='btnRegisterView' onclick="goToRegister()">회원가입</button>
 </main>
 
 

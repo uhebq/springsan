@@ -46,9 +46,9 @@ public class MemberController extends CommonRestController{
 		return "main";
 	}
 	
-	@GetMapping("/signup")
-	public String signupPage() {
-		return "signup";
+	@GetMapping("/register")
+	public String registerPage() {
+		return "register";
 	}
 	
 	@PostMapping("/loginAction")
